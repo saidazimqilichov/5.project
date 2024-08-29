@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build:
+      context: ./api_gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8085"
+    depends_on:
+      - hotel-service
+      - notification-service
+
+  booking-service:
+    build:
+      context: ./booking_service
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    depends_on:
+      - api-gateway
+
+  hotel-service:
+    build:
+      context: ./hotel_service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+
+  notification-service:
+    build:
+      context: ./notification_service
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+      - "8084:8084"
+
+  user-service:
+    build:
+      context: ./user_service
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
